@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DDFC7D6D30161F370055BBFD /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DDFC7D6C30161F370055BBFD /* Config.xcconfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DDFC7C813014C1F30055BBFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,11 +31,25 @@
 		DDFC7C733014C1F10055BBFD /* MovieWatchlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieWatchlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDFC7C803014C1F30055BBFD /* MovieWatchlistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWatchlistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDFC7C8A3014C1F30055BBFD /* MovieWatchlistUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWatchlistUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDFC7D6C30161F370055BBFD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DDFC7D6F30161FAD0055BBFD /* Exceptions for "MovieWatchlist" folder in "MovieWatchlist" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DDFC7C723014C1F10055BBFD /* MovieWatchlist */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DDFC7C753014C1F10055BBFD /* MovieWatchlist */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DDFC7D6F30161FAD0055BBFD /* Exceptions for "MovieWatchlist" folder in "MovieWatchlist" target */,
+			);
 			path = MovieWatchlist;
 			sourceTree = "<group>";
 		};
@@ -75,6 +93,7 @@
 		DDFC7C6A3014C1F10055BBFD = {
 			isa = PBXGroup;
 			children = (
+				DDFC7D6C30161F370055BBFD /* Config.xcconfig */,
 				DDFC7C753014C1F10055BBFD /* MovieWatchlist */,
 				DDFC7C833014C1F30055BBFD /* MovieWatchlistTests */,
 				DDFC7C8D3014C1F30055BBFD /* MovieWatchlistUITests */,
@@ -212,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDFC7D6D30161F370055BBFD /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +291,7 @@
 /* Begin XCBuildConfiguration section */
 		DDFC7C923014C1F30055BBFD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDFC7D6C30161F370055BBFD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -334,6 +355,7 @@
 		};
 		DDFC7C933014C1F30055BBFD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDFC7D6C30161F370055BBFD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -397,6 +419,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MovieWatchlist/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -428,6 +451,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MovieWatchlist/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -1,0 +1,10 @@
+//
+//  Config.xcconfig
+//  MovieWatchlist
+//
+//  Created by Nidhishree Nayak on 26/07/26.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+TMDB_API_TOKEN = abc
