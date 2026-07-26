@@ -15,9 +15,21 @@ final class Appcoordinator {
     /// - Returns: Returns a view controller containing the main app navigation.
     func makeRootViewController() -> UIViewController {
         let tabBarController = UITabBarController()
-        let moviesView = MoviesView()
+        let movieService = TMDBMovieService()
+        let watchlistStore = UserDefaultsWatchlistStore()
+        let moviesNav = UINavigationController()
+        let moviesView = MoviesView(movieService: movieService) { [weak moviesNav] movie in
+            let detailView = MovieDetailsView(
+                movie: movie,
+                movieService: movieService,
+                watchlistStore: watchlistStore
+            )
+            let detailVC = UIHostingController(rootView: detailView)
+            moviesNav?.pushViewController(detailVC, animated: true)
+        }
         let moviesVC = UIHostingController(rootView: moviesView)
-        moviesVC.tabBarItem = UITabBarItem(
+        moviesNav.viewControllers = [moviesVC]
+        moviesNav.tabBarItem = UITabBarItem(
             title: "Movies",
             image: UIImage(systemName: "film"),
             selectedImage: nil
@@ -25,13 +37,14 @@ final class Appcoordinator {
         
         let watchlistView = WatchlistView()
         let watchlistVC = UIHostingController(rootView: watchlistView)
-        watchlistVC.tabBarItem = UITabBarItem(
+        let watchlistNav = UINavigationController(rootViewController: watchlistVC)
+        watchlistNav.tabBarItem = UITabBarItem(
             title: "Watchlist",
             image: UIImage(systemName: "bookmark"),
             selectedImage: nil
         )
         
-        tabBarController.viewControllers = [moviesVC, watchlistVC]
+        tabBarController.viewControllers = [moviesNav, watchlistNav]
         return tabBarController
     }
 }

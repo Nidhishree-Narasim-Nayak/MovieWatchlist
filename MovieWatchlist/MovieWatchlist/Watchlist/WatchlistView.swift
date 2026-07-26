@@ -13,7 +13,3 @@ struct WatchlistView: View {
             .font(.largeTitle)
     }
 }
-
-#Preview {
-    WatchlistView()
-}
