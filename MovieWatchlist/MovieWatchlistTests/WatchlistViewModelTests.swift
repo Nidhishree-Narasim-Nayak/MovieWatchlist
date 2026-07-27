@@ -41,7 +41,6 @@ final class WatchlistViewModelTests: XCTestCase {
     func test_initialState_isEmpty() {
         let store = MockWatchlistStore()
         let viewModel = WatchlistViewModel(watchlistStore: store)
-
         XCTAssertTrue(viewModel.movies.isEmpty)
     }
 
@@ -49,35 +48,28 @@ final class WatchlistViewModelTests: XCTestCase {
          let store = MockWatchlistStore()
          let movie = makeMovie()
          store.movies = [movie]
-
-         let sut = WatchlistViewModel(watchlistStore: store)
-         sut.refresh()
-
-         XCTAssertEqual(sut.movies, [movie])
+         let viewModel = WatchlistViewModel(watchlistStore: store)
+         viewModel.refresh()
+         XCTAssertEqual(viewModel.movies, [movie])
      }
     
     func test_refresh_whenStoreEmpty_returnsEmptyMovies() {
         let store = MockWatchlistStore()
-        let sut = WatchlistViewModel(watchlistStore: store)
-
-        sut.refresh()
-
-        XCTAssertTrue(sut.movies.isEmpty)
+        let viewModel = WatchlistViewModel(watchlistStore: store)
+        viewModel.refresh()
+        XCTAssertTrue(viewModel.movies.isEmpty)
     }
 
     func test_refresh_afterMovieRemoved_updatesList() {
         let store = MockWatchlistStore()
         let movie = makeMovie()
         store.movies = [movie]
-
-        let sut = WatchlistViewModel(watchlistStore: store)
-        sut.refresh()
-        XCTAssertEqual(sut.movies.count, 1)
-
+        let viewModel = WatchlistViewModel(watchlistStore: store)
+        viewModel.refresh()
+        XCTAssertEqual(viewModel.movies.count, 1)
         store.remove(movie.id)
-        sut.refresh()
-
-        XCTAssertTrue(sut.movies.isEmpty)
+        viewModel.refresh()
+        XCTAssertTrue(viewModel.movies.isEmpty)
     }
 
     func test_refresh_withMultipleMovies_preservesOrder() {
@@ -85,10 +77,8 @@ final class WatchlistViewModelTests: XCTestCase {
         let movie1 = makeMovie(id: 1, title: "Avatar")
         let movie2 = makeMovie(id: 2, title: "3 idiots")
         store.movies = [movie1, movie2]
-
-        let sut = WatchlistViewModel(watchlistStore: store)
-        sut.refresh()
-
-        XCTAssertEqual(sut.movies, [movie1, movie2])
+        let viewModel = WatchlistViewModel(watchlistStore: store)
+        viewModel.refresh()
+        XCTAssertEqual(viewModel.movies, [movie1, movie2])
     }
 }

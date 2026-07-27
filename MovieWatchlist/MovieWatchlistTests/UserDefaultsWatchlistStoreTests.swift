@@ -51,9 +51,7 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
         let movie = makeMovie()
-        
         store.add(movie)
-        
         XCTAssertTrue(store.isInWatchlist(movie.id))
         XCTAssertEqual(store.movies, [movie])
     }
@@ -62,10 +60,8 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
         let movie = makeMovie()
-        
         store.add(movie)
         store.add(movie)
-        
         XCTAssertEqual(store.movies.count, 1)
     }
     
@@ -73,10 +69,8 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
         let movie = makeMovie()
-        
         store.add(movie)
         store.remove(movie.id)
-        
         XCTAssertFalse(store.isInWatchlist(movie.id))
         XCTAssertTrue(store.movies.isEmpty)
     }
@@ -84,29 +78,23 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
     func test_remove_nonExistentMovie_doesNothing() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
-        
         store.add(makeMovie(id: 1))
         store.remove(999)
-        
         XCTAssertEqual(store.movies.count, 1)
     }
     
     func test_isInWatchlist_whenNotAdded_returnsFalse() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
-        
         XCTAssertFalse(store.isInWatchlist(999))
     }
     
     func test_persistence_survivesAcrossInstances() throws {
         let defaults = try XCTUnwrap(defaults)
         let movie = makeMovie()
-        
         let firstInstance = UserDefaultsWatchlistStore(defaults: defaults)
         firstInstance.add(movie)
-        
         let secondInstance = UserDefaultsWatchlistStore(defaults: defaults)
-        
         XCTAssertEqual(secondInstance.movies, [movie])
         XCTAssertTrue(secondInstance.isInWatchlist(movie.id))
     }
@@ -115,11 +103,9 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
         let movie = makeMovie()
-        
         store.add(movie)
         store.remove(movie.id)
         store.add(movie)
-        
         XCTAssertEqual(store.movies, [movie])
     }
 }
