@@ -18,12 +18,10 @@ final class AppCoordinator {
     func makeRootViewController() -> UIViewController {
 
         let tabBarController = UITabBarController()
-        let moviesNavigationController = makeMoviesNavigationController()
-        let watchlistNavigationController = makeWatchlistNavigationController()
 
         tabBarController.viewControllers = [
-            moviesNavigationController,
-            watchlistNavigationController
+            makeMoviesNavigationController(),
+            makeWatchlistNavigationController()
         ]
 
         return tabBarController

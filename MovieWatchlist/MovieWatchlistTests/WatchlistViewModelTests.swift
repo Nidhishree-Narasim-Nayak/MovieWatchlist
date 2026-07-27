@@ -8,25 +8,10 @@
 import XCTest
 @testable import MovieWatchlist
 
-final class MockWatchlistStore: WatchlistStoreProtocol {
-    var movies: [Movie] = []
-
-    func isInWatchlist(_ movieId: Int) -> Bool {
-        movies.contains { $0.id == movieId }
-    }
-
-    func add(_ movie: Movie) {
-        movies.append(movie)
-    }
-
-    func remove(_ movieId: Int) {
-        movies.removeAll { $0.id == movieId }
-    }
-}
-
 @MainActor
 final class WatchlistViewModelTests: XCTestCase {
     
+    /// Creates a sample movie for testing
     private func makeMovie(id: Int = 1, title: String = "Avatar") -> Movie {
         Movie(
             id: id,
@@ -38,12 +23,14 @@ final class WatchlistViewModelTests: XCTestCase {
         )
     }
     
+    /// Verifies that the watchlist is empty when the view model is created
     func test_initialState_isEmpty() {
         let store = MockWatchlistStore()
         let viewModel = WatchlistViewModel(watchlistStore: store)
         XCTAssertTrue(viewModel.movies.isEmpty)
     }
-
+    
+    /// Verifies that refreshing updates the watchlist with the store contents
     func test_refresh_reflectsStoreContents() {
          let store = MockWatchlistStore()
          let movie = makeMovie()
@@ -53,13 +40,15 @@ final class WatchlistViewModelTests: XCTestCase {
          XCTAssertEqual(viewModel.movies, [movie])
      }
     
+    /// Verifies that refreshing returns an empty watchlist when the store is empty
     func test_refresh_whenStoreEmpty_returnsEmptyMovies() {
         let store = MockWatchlistStore()
         let viewModel = WatchlistViewModel(watchlistStore: store)
         viewModel.refresh()
         XCTAssertTrue(viewModel.movies.isEmpty)
     }
-
+    
+    /// Verifies that refreshing updates the watchlist after a movie is removed
     func test_refresh_afterMovieRemoved_updatesList() {
         let store = MockWatchlistStore()
         let movie = makeMovie()
@@ -71,7 +60,8 @@ final class WatchlistViewModelTests: XCTestCase {
         viewModel.refresh()
         XCTAssertTrue(viewModel.movies.isEmpty)
     }
-
+    
+    /// Verifies that refreshing preserves the order of multiple movies
     func test_refresh_withMultipleMovies_preservesOrder() {
         let store = MockWatchlistStore()
         let movie1 = makeMovie(id: 1, title: "Avatar")

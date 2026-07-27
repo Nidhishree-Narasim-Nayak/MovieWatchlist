@@ -36,16 +36,33 @@ struct MoviesView: View {
                 ProgressView("Loading movies...")
                 
             case .loaded(let movies):
-                List(movies) { movie in
-                    Button {
-                        onSelectMovie(movie)
-                    } label: {
-                        MovieRowView(movie: movie)
+                List {
+
+                    ForEach(movies) { movie in
+
+                        Button {
+                            onSelectMovie(movie)
+                        } label: {
+                            MovieRowView(movie: movie)
+                        }
+                        .buttonStyle(.plain)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                        .onAppear {
+                            // Loads the next page when the last movie becomes visible
+                            if movie == movies.last {
+                                Task {
+                                    await viewModel.loadMovies()
+                                }
+                            }
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .listRowInsets(EdgeInsets())
-                    .padding(.horizontal)
-                    .padding(.vertical, 4)
+                    
+                    // Displays a loading indicator while more movies are being fetched
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                        .listRowSeparator(.hidden)
                 }
                 .listStyle(.plain)
                 

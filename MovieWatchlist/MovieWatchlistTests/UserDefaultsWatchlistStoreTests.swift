@@ -12,6 +12,7 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
     private var defaults: UserDefaults?
     private let testUserDefaultsName = "com.movieWatchlist.tests.watchlist"
     
+    /// Creates a clean UserDefaults instance before each test
     override func setUpWithError() throws {
         try super.setUpWithError()
         
@@ -24,12 +25,14 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         defaults.removePersistentDomain(forName: testUserDefaultsName)
     }
     
+    /// Removes all stored test data after each test
     override func tearDownWithError() throws {
         defaults?.removePersistentDomain(forName: testUserDefaultsName)
         defaults = nil
         try super.tearDownWithError()
     }
     
+    /// Creates a sample movie for testing
     private func makeMovie(id: Int = 1, title: String = "Avatar") -> Movie {
         Movie(
             id: id,
@@ -41,12 +44,14 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         )
     }
     
+    /// Verifies that the watchlist is empty initially
     func test_initialState_isEmpty() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
         XCTAssertTrue(store.movies.isEmpty)
     }
     
+    /// Verifies that adding a movie stores it in the watchlist
     func test_add_insertsMovie() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
@@ -56,6 +61,7 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         XCTAssertEqual(store.movies, [movie])
     }
     
+    /// Verifies that adding the same movie twice does not create duplicates
     func test_add_sameMovieTwice_doesNotDuplicate() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
@@ -65,6 +71,7 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         XCTAssertEqual(store.movies.count, 1)
     }
     
+    /// Verifies that removing a movie deletes it from the watchlist
     func test_remove_deletesMovie() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
@@ -75,6 +82,7 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         XCTAssertTrue(store.movies.isEmpty)
     }
     
+    /// Verifies that removing a movie that does not exist does not change the watchlist
     func test_remove_nonExistentMovie_doesNothing() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
@@ -83,12 +91,14 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         XCTAssertEqual(store.movies.count, 1)
     }
     
+    /// Verifies that a movie not in the watchlist returns false
     func test_isInWatchlist_whenNotAdded_returnsFalse() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)
         XCTAssertFalse(store.isInWatchlist(999))
     }
     
+    /// Verifies that the watchlist is persisted across store instances
     func test_persistence_survivesAcrossInstances() throws {
         let defaults = try XCTUnwrap(defaults)
         let movie = makeMovie()
@@ -99,6 +109,7 @@ final class UserDefaultsWatchlistStoreTests: XCTestCase {
         XCTAssertTrue(secondInstance.isInWatchlist(movie.id))
     }
     
+    /// Verifies that a movie can be added again after being removed
     func test_addThenRemove_thenAddAgain_worksCorrectly() throws {
         let defaults = try XCTUnwrap(defaults)
         let store = UserDefaultsWatchlistStore(defaults: defaults)

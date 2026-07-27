@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MovieServiceProtocol {
-    func fetchMovies(page: Int) async throws -> [Movie]
+    func fetchMovies(page: Int) async throws -> MovieResponse
     func fetchMovieDetail(movieId: Int) async throws -> MovieDetail
 }
 
@@ -25,7 +25,7 @@ final class TMDBMovieService: MovieServiceProtocol {
     /// - Parameter page: The page number to fetch
     /// - Returns: An array of movies
     /// - Throws: An error if the request fails
-    func fetchMovies(page: Int) async throws -> [Movie] {
+    func fetchMovies(page: Int) async throws -> MovieResponse {
         guard var components = URLComponents(string: Api.baseURL + Api.Endpoint.discoverMovies.rawValue) else {
             throw ApiError.badURL
         }
@@ -35,9 +35,8 @@ final class TMDBMovieService: MovieServiceProtocol {
                 URLQueryItem(name: Api.QueryKey.sortBy.rawValue, value: "popularity.desc")
             ]
         guard let url = components.url else { throw ApiError.badURL }
-        let response: MovieResponse = try await client.get(url: url, headers: authHeaders)
         
-        return response.results
+        return try await client.get(url: url, headers: authHeaders)
     }
     
     /// Fetches details for a specific movie
