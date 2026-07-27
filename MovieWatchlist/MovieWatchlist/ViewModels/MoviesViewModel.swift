@@ -28,7 +28,7 @@ final class MoviesViewModel: ObservableObject {
     func loadMovies() async {
         state = .loading
         do {
-            let movies = try await movieService.fetchTrendingMovies(page: 1)
+            let movies = try await movieService.fetchMovies(page: 1)
             state = .loaded(movies)
         } catch {
             state = .error(error.localizedDescription)

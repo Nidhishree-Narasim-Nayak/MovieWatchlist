@@ -12,6 +12,8 @@ enum Api {
     static let bearerToken = Bundle.main.tmdbAPIToken
 
     enum Endpoint: String {
+
+        case discoverMovies = "/discover/movie"
         case trendingMovies = "/trending/movie/day"
         case movieDetail = "/movie"
     }
@@ -19,6 +21,7 @@ enum Api {
     enum QueryKey: String {
         case language
         case page
+        case sortBy = "sort_by"
     }
 }
 

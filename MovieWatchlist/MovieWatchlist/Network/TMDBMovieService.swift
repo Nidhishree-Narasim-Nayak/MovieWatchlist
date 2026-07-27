@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MovieServiceProtocol {
-    func fetchTrendingMovies(page: Int) async throws -> [Movie]
+    func fetchMovies(page: Int) async throws -> [Movie]
     func fetchMovieDetail(movieId: Int) async throws -> MovieDetail
 }
 
@@ -21,17 +21,18 @@ final class TMDBMovieService: MovieServiceProtocol {
         ]
     }
     
-    /// Fetches a page of trending movies
+    /// Fetches a page of movies from the Discover API which is sorted by popularity
     /// - Parameter page: The page number to fetch
-    /// - Returns: An array of trending movies
+    /// - Returns: An array of movies
     /// - Throws: An error if the request fails
-    func fetchTrendingMovies(page: Int) async throws -> [Movie] {
-        guard var components = URLComponents(string: Api.baseURL + Api.Endpoint.trendingMovies.rawValue) else {
+    func fetchMovies(page: Int) async throws -> [Movie] {
+        guard var components = URLComponents(string: Api.baseURL + Api.Endpoint.discoverMovies.rawValue) else {
             throw ApiError.badURL
         }
             components.queryItems = [
                 URLQueryItem(name: Api.QueryKey.language.rawValue, value: "en-US"),
-                URLQueryItem(name: Api.QueryKey.page.rawValue, value: "\(page)")
+                URLQueryItem(name: Api.QueryKey.page.rawValue, value: "\(page)"),
+                URLQueryItem(name: Api.QueryKey.sortBy.rawValue, value: "popularity.desc")
             ]
         guard let url = components.url else { throw ApiError.badURL }
         let response: MovieResponse = try await client.get(url: url, headers: authHeaders)

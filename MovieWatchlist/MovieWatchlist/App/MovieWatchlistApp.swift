@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct MovieWatchlistApp: App {
-    let coordinator = Appcoordinator()
+    let coordinator = AppCoordinator()
     var body: some Scene {
         WindowGroup {
             CoordinatorView(
